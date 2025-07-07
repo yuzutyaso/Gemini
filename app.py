@@ -6,11 +6,13 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import google.generativeai as genai
 
-# Gemini APIキーを環境変数から取得
-# OnRenderにデプロイする際に、環境変数 'GEMINI_API_KEY' を設定します。
-API_KEY = os.getenv("GEMINI_API_KEY")
-if not API_KEY:
-    raise ValueError("GEMINI_API_KEY 環境変数が設定されていません。")
+# Gemini APIキーを直接コードに記述 (非推奨)
+# ★★★ ここにあなたのGemini APIキーを直接入力してください ★★★
+API_KEY = "AIzaSyBrD33qBBMaOLa4F9MvvJn8_0PmFilll4g" # ← この部分をあなたの実際のキーに置き換える
+
+# もしAPIキーがまだない、または無効なキーの場合の基本的なチェック
+if not API_KEY or API_KEY == "YOUR_GEMINI_API_KEY_HERE": # YOUR_GEMINI_API_KEY_HEREは置き換え忘れがないかのチェック用
+    raise ValueError("Gemini APIキーが設定されていないか、無効です。正しいキーを入力してください。")
 
 genai.configure(api_key=API_KEY)
 
@@ -20,7 +22,6 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Jinja2Templates を使用してHTMLファイルを返す
-# 今回は直接HTMLを返すので厳密には不要ですが、今後の拡張のために残します。
 templates = Jinja2Templates(directory="static")
 
 # Geminiモデルの初期化
