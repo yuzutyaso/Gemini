@@ -11,7 +11,7 @@ import google.generativeai as genai
 API_KEY = "AIzaSyBrD33qBBMaOLa4F9MvvJn8_0PmFilll4g" # ← この部分をあなたの実際のキーに置き換える
 
 # もしAPIキーがまだない、または無効なキーの場合の基本的なチェック
-if not API_KEY or API_KEY == "YOUR_GEMINI_API_KEY_HERE": # YOUR_GEMINI_API_KEY_HEREは置き換え忘れがないかのチェック用
+if not API_KEY or API_KEY == "AIzaSyBrD33qBBMaOLa4F9MvvJn8_0PmFilll4g": # YOUR_GEMINI_API_KEY_HEREは置き換え忘れがないかのチェック用
     raise ValueError("Gemini APIキーが設定されていないか、無効です。正しいキーを入力してください。")
 
 genai.configure(api_key=API_KEY)
