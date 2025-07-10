@@ -1,0 +1,36 @@
+# render.yaml
+# (gemini-chatbot/render.yaml)
+
+# YAMLファイル設定のバージョン
+# 通常は 'v1' を使用
+services:
+  - type: web # Webサービスとしてデプロイ
+    name: gemini-chatbot # サービス名。OnRenderのダッシュボードに表示される名前
+    env: python # ランタイム環境。Pythonアプリケーションなので 'python' を指定
+    # gitHubリポジトリへのリンク。このrender.yamlがあるリポジトリを指定
+    # OnRenderでプロジェクトを作成する際に、自動で検出されることが多い
+    # repo: https://github.com/your-username/your-repo-name # 実際のURLに置き換えてください
+    region: oregon # デプロイするリージョン。例: oregon, frankfurt, singapore
+    plan: free # プラン。テスト用には 'free' で十分
+    branch: main # デプロイするブランチ。通常は 'main' または 'master'
+
+    # ビルドコマンド
+    # OnRenderがアプリケーションをビルドするために実行するコマンド
+    buildCommand: pip install -r requirements.txt
+
+    # 起動コマンド
+    # アプリケーションを起動するためのコマンド
+    # uvicornを使ってFastAPIアプリケーションを起動
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+    # 環境変数の設定
+    # ここにGemini APIキーを設定します
+    envVars:
+      - key: GEMINI_API_KEY # 環境変数のキー名
+        value: AIzaSyBrD33qBBMaOLa4F9MvvJn8_0PmFilll4g # ★ここにあなたのAPIキーを直接記述 (推奨されない)
+        # 上記のコメントアウトした行の代わりに、OnRenderのWeb UIで安全に設定することを強く推奨します。
+        # render.yamlに直接記述すると、リポジトリにAPIキーがコミットされてしまいます。
+        # したがって、通常は 'sync' などの方法でUIから設定した値を読み込みます。
+        # 例:
+        # sync: false # これにより、UIから設定した環境変数が優先されます。
+        # この例ではAPIキーはUIから設定することを前提とします。
